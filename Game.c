@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include<stdlib.h>
-#include <conio.h>
-#include <math.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
+#include <unistd.h>
+
 
 char Board[3][3];
 const char Player = 'X';
@@ -20,24 +20,36 @@ char CheckWinner();
 int main(void)
 {
 
-    char winner = ' ';
-
-    ResetBoard();
-
-    while (winner == ' ' && CheckFreeSpace() != 0)
+    char winner =' ';
+    char respond =' ';
+    do
     {
-        ShowBoard();
-        PlayerMove();
-        ComputerMove();
-        winner = CheckWinner();
-        if (winner != ' ' || CheckFreeSpace() == 0)
+        winner =' ';
+        respond =' ';
+        ResetBoard();
+
+        while (winner == ' ' && CheckFreeSpace() != 0)
         {
-            break;
+            ShowBoard();
+            PlayerMove();
+            ComputerMove();
+            winner = CheckWinner();
+            if (winner != ' ' || CheckFreeSpace() == 0)
+            {
+                break;
+            }
         }
+        ShowBoard();
+        WhoWin(winner);
+
+        printf("\nWould you like to play again? (Y/N): ");
+        scanf("%s",&respond);
+        respond = toupper(respond);
         
-    }
-    ShowBoard();
-    WhoWin(winner);
+
+    } while (respond == 'Y');
+
+    printf("\n\t Thank u for playing !");
 
     return 0;
 }
@@ -106,9 +118,10 @@ void ComputerMove()
 
         Board[x][y] = Computer;
     }
-    else {
+    else
+    {
         WhoWin(' ');
-            }
+    }
 }
 
 int CheckFreeSpace()
@@ -134,20 +147,18 @@ void WhoWin(char winner)
 
     if (winner == 'X')
     {
-        printf("You WIN!");
+        printf("\n\tYou WIN! \n");
     }
 
     else if (winner == 'O')
     {
-        printf("Game over you lOSE");
+        printf("\n\tGame over you lose \n");
     }
 
     else if (winner == ' ')
     {
-        printf(" Its a DRAW");
+        printf("\n\t Its a DRAW \n");
     }
-    
-       
 }
 
 char CheckWinner()
