@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
-#include <unistd.h>
-
 
 char Board[3][3];
 const char Player = 'X';
